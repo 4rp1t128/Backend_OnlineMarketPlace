@@ -1,5 +1,7 @@
 import express from 'express';
 import { connectDB } from './config/database.js';
+import userRouter from './routes/user.js';
+import cookieParser from 'cookie-parser';
 import { config } from 'dotenv';
 const app = express();
 config({
@@ -7,6 +9,16 @@ config({
 });
 
 connectDB();
+
+//Middlewares
+app.use(express.json());
+app.use(cookieParser());
+
+
+//Routes
+app.use("/api/v1/users", userRouter);
+
+
 
 app.listen(process.env.PORT,(err) => {
     if (err) {
